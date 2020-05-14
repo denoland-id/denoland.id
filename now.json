@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "name": "Deno Indonesia",
+  "alias": "https://denoland.id/",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@now/static-build",
+      "config": {
+        "distDir": "public"
+      }
+    }
+  ]
+}
