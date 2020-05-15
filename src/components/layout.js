@@ -45,7 +45,7 @@ const Layout = ({ children }) => {
             Twitter
           </a>{" "}
           <a
-            href="#"
+            href="https://blog.denoland.id/"
             style={{ textDecoration: "none", color: "darkorchid" }}
             target="_blank"
           >
