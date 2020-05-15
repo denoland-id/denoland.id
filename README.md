@@ -10,6 +10,6 @@
 
 🦕 Deno adalah Runtime ⚡ sederhana, modern, dan aman untuk JavaScript dan TypeScript yang menggunakan V8 dan dibangun dengan menggunakan Rust.
 
-## 🧐 Ada apa di dalam Deno
+## 🧐 Ada apa di dalam Deno 🦕
 
 _Lebih lanjut tentang Deno [official](https://deno.land/)._
