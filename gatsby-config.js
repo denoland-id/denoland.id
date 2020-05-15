@@ -37,20 +37,9 @@ module.exports = {
         icon: `src/images/deno.png`, // This path is relative to the root of the site.
       },
     },
+
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
-
-    // Plugin blog
-    {
-      resolve: `gatsby-theme-blog`,
-      options: {
-        // basePath defaults to `/`
-        basePath: `/blog`,
-        //contentPath: `content/posts`,
-        //assetPath: `assets`,
-        //mdxOtherwiseConfigured: true,
-      },
-    },
   ],
 }

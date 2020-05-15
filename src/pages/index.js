@@ -16,8 +16,8 @@ const IndexPage = () => (
         Official{" "}
         <a
           href="https://deno.land/v1"
+          style={{ textDecoration: "none", color: "darkorchid" }}
           target="_blank"
-          style={{ textDecoration: "none", color: "aqua" }}
         >
           Versi 1.0
         </a>{" "}

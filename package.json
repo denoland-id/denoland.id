@@ -12,7 +12,6 @@
     "gatsby-plugin-react-helmet": "^3.3.1",
     "gatsby-plugin-sharp": "^2.6.2",
     "gatsby-source-filesystem": "^2.3.1",
-    "gatsby-theme-blog": "^1.5.25",
     "gatsby-transformer-sharp": "^2.5.2",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",

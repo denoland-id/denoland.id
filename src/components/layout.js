@@ -39,11 +39,16 @@ const Layout = ({ children }) => {
           {` `}
           <a
             href="https://twitter.com/LandDeno"
-            style={{ textDecoration: "none", color: "aqua" }}
+            style={{ textDecoration: "none", color: "darkorchid" }}
+            target="_blank"
           >
             Twitter
           </a>{" "}
-          <a href="/blog" style={{ textDecoration: "none", color: "aqua" }}>
+          <a
+            href="#"
+            style={{ textDecoration: "none", color: "darkorchid" }}
+            target="_blank"
+          >
             Blog
           </a>
         </footer>
