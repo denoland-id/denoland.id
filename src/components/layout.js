@@ -50,6 +50,13 @@ const Layout = ({ children }) => {
             target="_blank"
           >
             Blog
+          </a>{" "}
+          <a
+            href="https://discord.gg/DzJc5h"
+            style={{ textDecoration: "none", color: "darkorchid" }}
+            target="_blank"
+          >
+            Discord
           </a>
         </footer>
       </div>
