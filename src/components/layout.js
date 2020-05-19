@@ -52,11 +52,11 @@ const Layout = ({ children }) => {
             Blog
           </a>{" "}
           <a
-            href="https://discord.gg/DzJc5h"
+            href="https://t.me/deno_id"
             style={{ textDecoration: "none", color: "darkorchid" }}
             target="_blank"
           >
-            Discord
+            Telegram
           </a>
         </footer>
       </div>
