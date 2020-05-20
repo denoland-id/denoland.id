@@ -9,6 +9,7 @@
     "gatsby-image": "^2.4.3",
     "gatsby-plugin-manifest": "^2.4.2",
     "gatsby-plugin-offline": "^3.2.1",
+    "gatsby-plugin-postcss": "^2.3.1",
     "gatsby-plugin-react-helmet": "^3.3.1",
     "gatsby-plugin-sharp": "^2.6.2",
     "gatsby-source-filesystem": "^2.3.1",
@@ -19,7 +20,10 @@
     "react-helmet": "^6.0.0"
   },
   "devDependencies": {
-    "prettier": "2.0.5"
+    "@tailwindcss/custom-forms": "^0.2.1",
+    "cssnano": "^4.1.10",
+    "prettier": "2.0.5",
+    "tailwindcss": "^1.4.6"
   },
   "keywords": [
     "gatsby"

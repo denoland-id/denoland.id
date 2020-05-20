@@ -10,7 +10,7 @@ import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 
 import Header from "./header"
-import "./layout.css"
+// import "./layout.css"
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -41,6 +41,7 @@ const Layout = ({ children }) => {
             href="https://twitter.com/LandDeno"
             style={{ textDecoration: "none", color: "darkorchid" }}
             target="_blank"
+            rel="noopener noreferrer"
           >
             Twitter
           </a>{" "}
@@ -48,6 +49,7 @@ const Layout = ({ children }) => {
             href="https://blog.denoland.id/"
             style={{ textDecoration: "none", color: "darkorchid" }}
             target="_blank"
+            rel="noopener noreferrer"
           >
             Blog
           </a>{" "}
@@ -55,6 +57,7 @@ const Layout = ({ children }) => {
             href="https://t.me/deno_id"
             style={{ textDecoration: "none", color: "darkorchid" }}
             target="_blank"
+            rel="noopener noreferrer"
           >
             Telegram
           </a>

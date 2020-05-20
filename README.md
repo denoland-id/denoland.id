@@ -8,7 +8,7 @@
   Deno Indonesia
 </h1>
 
-🦕 Deno adalah Runtime ⚡ sederhana, modern, dan aman untuk JavaScript dan TypeScript yang menggunakan V8 dan dibangun dengan menggunakan Rust.
+🦕 Deno adalah Runtime ⚡ sederhana, modern, dan aman untuk JavaScript dan TypeScript yang menggunakan V8 dan dibangun dengan menggunakan Rust. Kunjungi kami di [Deno Indonesia](https://denoland.id/)
 
 ## 🧐 Ada apa di dalam Deno 🦕
 

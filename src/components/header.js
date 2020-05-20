@@ -1,23 +1,12 @@
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
-import { darkgrey } from "color-name"
+// import { darkgrey } from "color-name"
 
 const Header = ({ siteTitle }) => (
-  <header
-    style={{
-      background: `#272323`,
-      marginBottom: `1.45rem`,
-    }}
-  >
-    <div
-      style={{
-        margin: `0 auto`,
-        maxWidth: 960,
-        padding: `1.45rem 1.0875rem`,
-      }}
-    >
-      <h1 style={{ margin: 0, textAlign: "center" }}>
+  <header className="bg-black">
+    <div className="flex justify-center p-4 md:p-4">
+      <h1 className="font-bold text-4xl flex items-center text-white no-underline">
         <Link
           to="/"
           style={{
