@@ -1,8 +1,9 @@
 {
+  "scope": "denoland-id",
   "alias": ["denoland.id"],
-  "env": {},
-  "build": {
-    "env": {}
+  "env": {
+    "AIRTABLE_API_KEY": "@airtable-api-key",
+    "AIRTABLE_BASE_ID": "appxL3Dof2QILyf6Z"
   },
   "github": {
     "autoAlias": true,
