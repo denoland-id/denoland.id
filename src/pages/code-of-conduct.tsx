@@ -22,6 +22,7 @@ export const getStaticProps: GetStaticProps<COCPageProps> = async () => {
     props: {
       content,
     },
+    unstable_revalidate: 60,
   };
 };
 
