@@ -5,6 +5,12 @@
     "AIRTABLE_API_KEY": "@airtable-api-key",
     "AIRTABLE_BASE_ID": "appxL3Dof2QILyf6Z"
   },
+  "build": {
+    "env": {
+      "AIRTABLE_API_KEY": "@airtable-api-key",
+      "AIRTABLE_BASE_ID": "appxL3Dof2QILyf6Z"
+    }
+  },
   "github": {
     "autoAlias": true,
     "enabled": true
