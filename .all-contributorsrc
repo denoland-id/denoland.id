@@ -19,7 +19,17 @@
         "code",
         "maintenance"
       ]
+    },
+    {
+      "login": "ekaone",
+      "name": "Eka Prasetia",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/50127577?v=4",
+      "profile": "https://github.com/ekaone",
+      "contributions": [
+        "content"
+      ]
     }
   ],
-  "contributorsPerLine": 7
+  "contributorsPerLine": 7,
+  "skipCi": true
 }
