@@ -2,9 +2,9 @@ import * as React from "react";
 
 import { Box, List, ListItem, Stack, Text } from "@chakra-ui/core";
 
-import { Link } from "../components";
+import { Link } from "@/components";
 import { NextSeo } from "next-seo";
-import { useSiteConfig } from "../hooks";
+import { useSiteConfig } from "@/hooks";
 
 const HomePage: React.FC = () => {
   const siteConfig = useSiteConfig();
