@@ -1,49 +1,59 @@
 {
-  "name": "gatsby-starter-default",
-  "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
-  "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "name": "denoland.id",
+  "description": "Website and library registry for Deno Land Indonesia 🏡",
+  "version": "1.0.0",
+  "repository": "git@github.com:denoland-id/denoland.id.git",
+  "author": "Griko Nibras <griko@denoland.id>",
+  "scripts": {
+    "now-build": "yarn build:assets && yarn build:web",
+    "build": "env-cmd yarn build:assets && env-cmd yarn build:web",
+    "build:assets": "node scripts/build.js",
+    "build:web": "next build",
+    "clean": "rimraf .next \"public/!(social.png)\"",
+    "develop": "next dev",
+    "format": "yarn format:index && yarn format:scripts && yarn format:src",
+    "format:index": "prettier --write \"*.{js,json,md}\"",
+    "format:scripts": "prettier --write \"scripts/**/*.js\"",
+    "format:src": "prettier --write \"src/**/*.{js,ts,tsx}\"",
+    "contributors:add": "all-contributors add",
+    "contributors:generate": "all-contributors generate",
+    "prepare": "yarn format"
+  },
   "dependencies": {
-    "gatsby": "^2.21.22",
-    "gatsby-image": "^2.4.3",
-    "gatsby-plugin-manifest": "^2.4.2",
-    "gatsby-plugin-offline": "^3.2.1",
-    "gatsby-plugin-postcss": "^2.3.1",
-    "gatsby-plugin-react-helmet": "^3.3.1",
-    "gatsby-plugin-sharp": "^2.6.2",
-    "gatsby-source-filesystem": "^2.3.1",
-    "gatsby-transformer-sharp": "^2.5.2",
-    "prop-types": "^15.7.2",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-helmet": "^6.0.0"
+    "@chakra-ui/core": "^0.8.0",
+    "@emotion/core": "^10.0.28",
+    "@emotion/styled": "^10.0.27",
+    "emotion-theming": "^10.0.27",
+    "favicons": "^6.1.0",
+    "next": "^9.4.4",
+    "next-seo": "^4.5.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-icons": "^3.10.0",
+    "react-markdown": "^4.3.1",
+    "sitemap": "^6.1.5"
   },
   "devDependencies": {
-    "@tailwindcss/custom-forms": "^0.2.1",
-    "cssnano": "^4.1.10",
-    "prettier": "2.0.5",
-    "tailwindcss": "^1.4.6"
+    "@types/marked": "^0.7.4",
+    "@types/node": "^14.0.5",
+    "@types/react": "^16.9.35",
+    "@types/react-dom": "^16.9.8",
+    "all-contributors-cli": "^6.15.0",
+    "env-cmd": "^10.1.0",
+    "husky": "^4.2.5",
+    "prettier": "^2.0.5",
+    "rimraf": "^3.0.2",
+    "typescript": "^3.9.3"
   },
-  "keywords": [
-    "gatsby"
-  ],
-  "license": "MIT",
-  "scripts": {
-    "now-build": "gatsby build",
-    "build": "gatsby build",
-    "develop": "gatsby develop",
-    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
-    "start": "npm run develop",
-    "serve": "gatsby serve",
-    "clean": "gatsby clean",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn contributors:generate && yarn prepare"
+    }
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+  "prettier": {
+    "semi": true,
+    "singleQuote": false,
+    "trailingComma": "all"
   },
-  "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
-  }
+  "license": "MIT"
 }
