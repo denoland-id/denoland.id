@@ -5,11 +5,11 @@ export default [
     isExternal: true,
   },
   {
-    children: "Third Party Modules",
-    href: "/x",
-  },
-  {
     children: "Code of Conduct",
     href: "/code-of-conduct",
+  },
+  {
+    children: "Third Party Modules",
+    href: "/x",
   },
 ];
