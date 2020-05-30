@@ -12,10 +12,8 @@ export const transformModuleFields = (fields: DenoModule): DenoModule => {
 };
 
 export const searchModuleFields = (fields: DenoModule, search: string) => {
-  return (
-    fields.name.includes(search) ||
-    fields.desc.includes(search) ||
-    fields.org.includes(search) ||
-    fields.repo.includes(search)
-  );
+  return Object.values(fields)
+    .join("")
+    .toLowerCase()
+    .includes(search.toLowerCase());
 };
