@@ -27,7 +27,7 @@ export const getStaticProps: GetStaticProps<COCPageProps> = async () => {
 };
 
 const COCPage: React.FC<COCPageProps> = ({ content }) => (
-  <Box maxW="4xl" mx="auto" p={8}>
+  <Box maxW="5xl" mx="auto" p={8}>
     <NextSeo
       title="Code of Conduct"
       description="Deno Land Indonesia code of conduct"

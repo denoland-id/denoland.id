@@ -51,7 +51,7 @@ const XPage: React.FC<XPageProps> = ({ data }) => {
   );
 
   return (
-    <Stack maxW="4xl" mx="auto" p={8} spacing={8}>
+    <Stack maxW="5xl" mx="auto" p={8} spacing={8}>
       <NextSeo
         title="Third Party Modules"
         description="Deno Land Indonesia third party modules"
