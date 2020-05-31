@@ -13,9 +13,15 @@ import { DefaultSeo, SocialProfileJsonLd } from "next-seo";
 import { Footer, Navbar } from "@/components";
 
 import { AppProps } from "next/app";
+import NProgress from "nprogress";
+import Router from "next/router";
 import { SiteConfigProvider } from "@/store/site-config";
 import theme from "@/theme";
 import useSiteConfig from "@/hooks/use-site-config";
+
+Router.events.on("routeChangeStart", () => NProgress.start());
+Router.events.on("routeChangeComplete", () => NProgress.done());
+Router.events.on("routeChangeError", () => NProgress.done());
 
 const CustomAppPage = ({ Component, pageProps, router }: AppProps) => {
   const siteConfig = useSiteConfig();
