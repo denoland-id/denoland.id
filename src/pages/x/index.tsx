@@ -9,7 +9,6 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/core";
-import { searchModuleFields, transformModuleFields } from "@/utils";
 import { useDebounce, useSiteConfig } from "@/hooks";
 
 import { DenoModule } from "@/types";
@@ -17,6 +16,7 @@ import { GetStaticProps } from "next";
 import { Link } from "@/components";
 import { NextSeo } from "next-seo";
 import { getModulesTable } from "@/services/airtable";
+import { searchModuleFields } from "@/utils";
 
 interface XPageProps {
   data: DenoModule[];
@@ -26,7 +26,7 @@ export const getStaticProps: GetStaticProps<XPageProps> = async () => {
   const data = await getModulesTable()
     .select({ sort: [{ field: "name" }] })
     .all()
-    .then((d) => d.map(({ fields }) => transformModuleFields(fields)));
+    .then((d) => d.map(({ fields }) => fields));
 
   return {
     props: {
