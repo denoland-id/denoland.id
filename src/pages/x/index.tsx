@@ -2,6 +2,7 @@ import * as React from "react";
 
 import {
   Box,
+  Code,
   Heading,
   Icon,
   Input,
@@ -9,7 +10,6 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/core";
-import { searchModuleFields, transformModuleFields } from "@/utils";
 import { useDebounce, useSiteConfig } from "@/hooks";
 
 import { DenoModule } from "@/types";
@@ -17,6 +17,7 @@ import { GetStaticProps } from "next";
 import { Link } from "@/components";
 import { NextSeo } from "next-seo";
 import { getModulesTable } from "@/services/airtable";
+import { searchModuleFields } from "@/utils";
 
 interface XPageProps {
   data: DenoModule[];
@@ -24,9 +25,13 @@ interface XPageProps {
 
 export const getStaticProps: GetStaticProps<XPageProps> = async () => {
   const data = await getModulesTable()
-    .select({ sort: [{ field: "name" }] })
+    .select({
+      fields: ["name", "desc"],
+      filterByFormula: "{active} = 1",
+      sort: [{ field: "name" }],
+    })
     .all()
-    .then((d) => d.map(({ fields }) => transformModuleFields(fields)));
+    .then((d) => d.map(({ fields }) => fields));
 
   return {
     props: {
@@ -51,7 +56,7 @@ const XPage: React.FC<XPageProps> = ({ data }) => {
   );
 
   return (
-    <Stack maxW="4xl" mx="auto" p={8} spacing={8}>
+    <Stack maxW="5xl" mx="auto" p={8} spacing={8}>
       <NextSeo
         title="Third Party Modules"
         description="Deno Land Indonesia third party modules"
@@ -62,38 +67,20 @@ const XPage: React.FC<XPageProps> = ({ data }) => {
         <Text>
           Berikut merupakan daftar modul Deno karya para developer Indonesia. 🇮🇩
         </Text>
-        <Text>
-          Untuk sementara, daftar berikut hanya mengarah ke repository modul
-          melainkan layanan <em>URL rewriting</em> seperti{" "}
-          <Link href="https://deno.land/x" isExternal i>
-            deno.land/x
-          </Link>
-          . Anda dapat bantu kontribusi pengembangan layanan berikut pada{" "}
-          <Link href={socials.github} isExternal i>
-            repositori GitHub kami
-          </Link>
-          .
-        </Text>
 
-        {/*
-        <Text>
-          <b>denoland.id/x</b> merupakan layanan penulisan ulang URL untuk
-          modul Deno mirip dengan{" "}
-          <Link href="https://deno.land/x" isExternal i>
-            deno.land/x
-          </Link>
-          .
-        </Text>
         <Text>
           Format dasar URL adalah{" "}
           <Code>https://denoland.id/x/MODULE_NAME@BRANCH/SCRIPT.ts</Code>. Jika
           tidak menyertakan nama branch, URL akan menggunakan branch default
           pada modul, umumnya yaitu branch <Code>master</Code>.
         </Text>
-        */}
 
         <Text>
-          Untuk menambahkan modul baru, silakan{" "}
+          Anda dapat bantu kontribusi pengembangan layanan berikut pada{" "}
+          <Link href={socials.github} isExternal i>
+            repositori GitHub kami
+          </Link>
+          . Untuk menambahkan modul baru, silakan{" "}
           <Link href="https://airtable.com/shreNZcwvO3tM19L1" isExternal i>
             mengisi form modul database
           </Link>
@@ -103,20 +90,22 @@ const XPage: React.FC<XPageProps> = ({ data }) => {
 
       <Box>
         <Input
-          placeholder="Input nama modul dan tekan enter"
+          borderColor="gray.300"
+          boxShadow="sm"
           onChange={(e) => setSearch(e.target.value)}
           onKeyPress={({ key }) => key === "Enter" && update()}
+          placeholder="Input nama modul dan tekan enter"
         />
       </Box>
 
       <Box
-        borderColor="gray.200"
+        borderColor="gray.300"
         borderRadius={4}
         borderWidth={1}
-        boxShadow="md"
+        boxShadow="sm"
       >
         {filteredData.length > 0 ? (
-          filteredData.map(({ name, desc, repoUrl }) => (
+          filteredData.map(({ name, desc }) => (
             <PseudoBox
               key={name}
               _hover={{ backgroundColor: "gray.50" }}
@@ -127,8 +116,9 @@ const XPage: React.FC<XPageProps> = ({ data }) => {
               <Link
                 display="flex"
                 _hover={{ textDecoration: "none" }}
-                href={repoUrl}
-                isExternal
+                href="/x/[...segments]"
+                isNextLink
+                linkAs={`/x/${name}`}
                 justifyContent="space-between"
               >
                 <Box px={4} py={2}>

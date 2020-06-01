@@ -1,7 +1,29 @@
 import { theme } from "@chakra-ui/core";
 
+const sans = [
+  "'Inter var'",
+  "Inter",
+  "-apple-system",
+  "BlinkMacSystemFont",
+  "'Segoe UI'",
+  "Roboto",
+  "Oxygen",
+  "Ubuntu",
+  "Cantarell",
+  "'Open Sans'",
+  "'Helvetica Neue'",
+  "sans-serif",
+];
+
+const fonts = {
+  body: sans.join(", "),
+  heading: sans.join(", "),
+  mono: theme.fonts.mono,
+};
+
 export default {
   ...theme,
+  fonts,
   icons: {
     ...theme.icons,
     menu: {
