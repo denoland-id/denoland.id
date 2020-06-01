@@ -13,3 +13,52 @@ export interface DenoModule extends FieldSet {
 
   repoUrl?: string;
 }
+
+export type GitHubTreeFileType = "dir" | "file";
+export type GitLabTreeFileType = "tree" | "blob";
+
+export type TreeFileType = GitHubTreeFileType | GitLabTreeFileType;
+
+export interface TreeFile<T = TreeFileType> {
+  name: string;
+  type: T;
+}
+
+export interface GitHubTreeFile extends TreeFile<GitHubTreeFileType> {
+  size: number;
+  content: string;
+  encoding: BufferEncoding;
+}
+
+export interface RegistryResult {
+  meta?: DenoModule;
+  branchtag?: string;
+  branchtags?: string[];
+  segments?: string[];
+  breadcrumbs?: string[][];
+  path?: string;
+  tree?: TreeFile | TreeFile[];
+  content?: string;
+}
+
+export type CreateBranchtagUrls = (opts: {
+  type: ModuleType;
+  org: string;
+  repo: string;
+}) => string[];
+
+export type TransformBranchtags = (opts: {
+  data: any;
+  type: ModuleType;
+}) => string[];
+
+export type FetchModuleBranchtags = (opts: {
+  type: ModuleType;
+  org: string;
+  repo: string;
+}) => Promise<string[]>;
+
+export type FetchModule = (opts: {
+  segments?: string[];
+  isApi?: boolean;
+}) => Promise<RegistryResult>;
