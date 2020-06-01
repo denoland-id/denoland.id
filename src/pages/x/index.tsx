@@ -103,17 +103,19 @@ const XPage: React.FC<XPageProps> = ({ data }) => {
 
       <Box>
         <Input
-          placeholder="Input nama modul dan tekan enter"
+          borderColor="gray.300"
+          boxShadow="sm"
           onChange={(e) => setSearch(e.target.value)}
           onKeyPress={({ key }) => key === "Enter" && update()}
+          placeholder="Input nama modul dan tekan enter"
         />
       </Box>
 
       <Box
-        borderColor="gray.200"
+        borderColor="gray.300"
         borderRadius={4}
         borderWidth={1}
-        boxShadow="md"
+        boxShadow="sm"
       >
         {filteredData.length > 0 ? (
           filteredData.map(({ name, desc, repoUrl }) => (
