@@ -24,6 +24,7 @@
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
     "airtable": "^0.8.1",
+    "copee": "^1.0.6",
     "emotion-theming": "^10.0.27",
     "favicons": "^6.1.0",
     "next": "^9.4.4",
@@ -31,6 +32,7 @@
     "nprogress": "^0.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-hook-form": "^5.7.2",
     "react-icons": "^3.10.0",
     "react-markdown": "^4.3.1",
     "sitemap": "^6.1.5"
