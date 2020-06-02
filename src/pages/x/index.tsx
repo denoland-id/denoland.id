@@ -12,26 +12,18 @@ import {
 } from "@chakra-ui/core";
 import { useDebounce, useSiteConfig } from "@/hooks";
 
-import { DenoModule } from "@/types";
+import { DenoDatabase } from "@/types";
 import { GetStaticProps } from "next";
 import { Link } from "@/components";
 import { NextSeo } from "next-seo";
-import { getModulesTable } from "@/services/airtable";
-import { searchModuleFields } from "@/utils";
+import { fetchRegistry } from "@/services/registry";
 
 interface XPageProps {
-  data: DenoModule[];
+  data: DenoDatabase;
 }
 
 export const getStaticProps: GetStaticProps<XPageProps> = async () => {
-  const data = await getModulesTable()
-    .select({
-      fields: ["name", "desc"],
-      filterByFormula: "{active} = 1",
-      sort: [{ field: "name" }],
-    })
-    .all()
-    .then((d) => d.map(({ fields }) => fields));
+  const data = await fetchRegistry();
 
   return {
     props: {
@@ -49,11 +41,11 @@ const XPage: React.FC<XPageProps> = ({ data }) => {
 
   const filteredData = React.useMemo(
     () =>
-      debouncedSearch
-        ? data.filter((d) => searchModuleFields(d, debouncedSearch))
-        : data,
+      debouncedSearch ? { [debouncedSearch]: data[debouncedSearch] } : data,
     [debouncedSearch],
   );
+
+  const entries = Object.entries(filteredData);
 
   return (
     <Stack maxW="5xl" mx="auto" p={8} spacing={8}>
@@ -83,8 +75,8 @@ const XPage: React.FC<XPageProps> = ({ data }) => {
             repositori GitHub kami
           </Link>
           . Untuk menambahkan modul baru, silakan{" "}
-          <Link href="https://airtable.com/shreNZcwvO3tM19L1" isExternal i>
-            mengisi form modul database
+          <Link href="https://registry.denoland.id" isExternal i>
+            submit PR di database registry kami
           </Link>
           .
         </Text>
@@ -106,8 +98,8 @@ const XPage: React.FC<XPageProps> = ({ data }) => {
         borderWidth={1}
         boxShadow="sm"
       >
-        {filteredData.length > 0 ? (
-          filteredData.map(({ name, desc }) => (
+        {entries.length > 0 ? (
+          entries.map(([name, { desc }]) => (
             <PseudoBox
               key={name}
               _hover={{ backgroundColor: "gray.50" }}

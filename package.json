@@ -23,7 +23,6 @@
     "@chakra-ui/core": "^0.8.0",
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
-    "airtable": "^0.8.1",
     "copee": "^1.0.6",
     "emotion-theming": "^10.0.27",
     "favicons": "^6.1.0",
@@ -38,7 +37,6 @@
     "sitemap": "^6.1.5"
   },
   "devDependencies": {
-    "@types/airtable": "^0.8.0",
     "@types/marked": "^0.7.4",
     "@types/node": "^14.0.5",
     "@types/nprogress": "^0.2.0",
