@@ -58,7 +58,7 @@ export type FetchModuleBranchtags = (opts: {
   repo: string;
 }) => Promise<string[]>;
 
-export type FetchModule = (opts: {
+export type FetchModuleMetadata = (opts: {
   segments?: string[];
   isApi?: boolean;
 }) => Promise<RegistryResult>;

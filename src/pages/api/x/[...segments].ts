@@ -1,4 +1,4 @@
-import { fetchModule, getContentType } from "@/utils/registry";
+import { fetchModuleMetadata, getContentType } from "@/utils/registry";
 
 import { NextApiHandler } from "next";
 
@@ -15,7 +15,7 @@ const handler: NextApiHandler = async (req, res) => {
     return redirect();
   }
 
-  const { content, tree } = await fetchModule({
+  const { content, tree } = await fetchModuleMetadata({
     segments,
     isApi: true,
   });

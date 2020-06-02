@@ -24,7 +24,7 @@ import { GetServerSideProps } from "next";
 import { NextSeo } from "next-seo";
 import { RegistryResult } from "@/types";
 import Router from "next/router";
-import { fetchModule } from "@/utils/registry";
+import { fetchModuleMetadata } from "@/utils/registry";
 import { useForm } from "react-hook-form";
 
 interface XPageProps {
@@ -35,7 +35,7 @@ export const getServerSideProps: GetServerSideProps<XPageProps> = async ({
   params,
 }) => {
   const segments = params.segments as string[];
-  const data = await fetchModule({ segments });
+  const data = await fetchModuleMetadata({ segments });
 
   return {
     props: {

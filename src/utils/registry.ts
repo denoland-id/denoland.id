@@ -1,6 +1,6 @@
 import {
   CreateBranchtagUrls,
-  FetchModule,
+  FetchModuleMetadata,
   FetchModuleBranchtags,
   GitHubTreeFile,
   TransformBranchtags,
@@ -60,7 +60,7 @@ export const fetchModuleBranchtags: FetchModuleBranchtags = async ({
   return refs;
 };
 
-export const fetchModule: FetchModule = async ({
+export const fetchModuleMetadata: FetchModuleMetadata = async ({
   segments,
   isApi = false,
 } = {}) => {
