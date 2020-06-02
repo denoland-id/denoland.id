@@ -1,17 +1,22 @@
-import { FieldSet } from "airtable";
-
 export type ModuleType = "GitHub" | "GitLab";
 
-export interface DenoModule extends FieldSet {
-  name: string;
+// https://github.com/denoland-id/registry/blob/master/types.d.ts#L3-L8
+export interface DenoDbEntry {
   desc: string;
-  active: boolean;
   type: ModuleType;
   org: string;
   repo: string;
-  url: string;
+}
 
-  repoUrl?: string;
+// https://github.com/denoland-id/registry/blob/master/types.d.ts#L10-L13}
+export interface DenoDatabase {
+  $schema?: string;
+  [module: string]: DenoDbEntry;
+}
+
+export interface DenoModule extends DenoDbEntry {
+  name: string;
+  repoUrl: string;
 }
 
 export type GitHubTreeFileType = "dir" | "file";
@@ -41,6 +46,12 @@ export interface RegistryResult {
   content?: string;
 }
 
+export type CreateRepoUrl = (opts: {
+  type: ModuleType;
+  org: string;
+  repo: string;
+}) => string;
+
 export type CreateBranchtagUrls = (opts: {
   type: ModuleType;
   org: string;
@@ -58,7 +69,7 @@ export type FetchModuleBranchtags = (opts: {
   repo: string;
 }) => Promise<string[]>;
 
-export type FetchModule = (opts: {
+export type FetchModuleMetadata = (opts: {
   segments?: string[];
   isApi?: boolean;
 }) => Promise<RegistryResult>;

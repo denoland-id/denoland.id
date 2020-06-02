@@ -1,14 +1,27 @@
 import {
   CreateBranchtagUrls,
-  FetchModule,
+  CreateRepoUrl,
+  DenoModule,
   FetchModuleBranchtags,
+  FetchModuleMetadata,
   GitHubTreeFile,
   TransformBranchtags,
   TreeFile,
 } from "@/types";
 
+import { fetchModule } from "@/services/registry";
 import { getGitHubHeaders } from "@/services/github";
-import { getModulesTable } from "@/services/airtable";
+
+export const createRepoUrl: CreateRepoUrl = ({ type, org, repo }) => {
+  switch (type) {
+    case "GitHub":
+      return `https://github.com/${org}/${repo}`;
+    case "GitLab":
+      return `https://gitlab.com/${org}/${repo}`;
+    default:
+      throw new Error("invalid module type");
+  }
+};
 
 export const createBranchtagUrls: CreateBranchtagUrls = ({
   type,
@@ -60,18 +73,20 @@ export const fetchModuleBranchtags: FetchModuleBranchtags = async ({
   return refs;
 };
 
-export const fetchModule: FetchModule = async ({
+export const fetchModuleMetadata: FetchModuleMetadata = async ({
   segments,
   isApi = false,
 } = {}) => {
-  let [, module, branchtag = null] = /([a-z]+)(?:@(.+))?/.exec(segments[0]);
+  let [, moduleName, branchtag = null] = /([a-z]+)(?:@(.+))?/.exec(segments[0]);
 
-  const result = await getModulesTable()
-    .select({ filterByFormula: `AND({name} = '${module}', {active} = 1)` })
-    .all();
+  const module = await fetchModule(moduleName);
 
-  if (result.length > 0) {
-    const meta = result[0].fields;
+  if (module) {
+    const meta: DenoModule = {
+      name: moduleName,
+      ...module,
+      repoUrl: createRepoUrl(module),
+    };
 
     let headers: Headers;
     if (meta.type === "GitHub") {

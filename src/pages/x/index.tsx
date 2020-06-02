@@ -12,48 +12,48 @@ import {
 } from "@chakra-ui/core";
 import { useDebounce, useSiteConfig } from "@/hooks";
 
-import { DenoModule } from "@/types";
+import { DenoDatabase } from "@/types";
 import { GetStaticProps } from "next";
 import { Link } from "@/components";
 import { NextSeo } from "next-seo";
-import { getModulesTable } from "@/services/airtable";
-import { searchModuleFields } from "@/utils";
+import { fetchRegistry } from "@/services/registry";
 
 interface XPageProps {
-  data: DenoModule[];
+  data: DenoDatabase;
+  keywords: string[][];
 }
 
 export const getStaticProps: GetStaticProps<XPageProps> = async () => {
-  const data = await getModulesTable()
-    .select({
-      fields: ["name", "desc"],
-      filterByFormula: "{active} = 1",
-      sort: [{ field: "name" }],
-    })
-    .all()
-    .then((d) => d.map(({ fields }) => fields));
+  const data = await fetchRegistry();
+  const keywords = Object.keys(data).map((d) => [
+    d,
+    Object.values(data[d]).concat(d).join("").toLowerCase(),
+  ]);
 
   return {
     props: {
       data,
+      keywords,
     },
     unstable_revalidate: 10,
   };
 };
 
-const XPage: React.FC<XPageProps> = ({ data }) => {
+const XPage: React.FC<XPageProps> = ({ data, keywords }) => {
   const { socials } = useSiteConfig();
 
   const [search, setSearch] = React.useState<string>();
   const [debouncedSearch, update] = useDebounce(search);
 
-  const filteredData = React.useMemo(
-    () =>
-      debouncedSearch
-        ? data.filter((d) => searchModuleFields(d, debouncedSearch))
-        : data,
-    [debouncedSearch],
-  );
+  const filteredData = React.useMemo<DenoDatabase>(() => {
+    return debouncedSearch
+      ? keywords
+          .filter(([, v]) => v.includes(debouncedSearch.toLowerCase()))
+          .reduce((acc, [k]) => ({ ...acc, [k]: data[k] }), {})
+      : data;
+  }, [debouncedSearch]);
+
+  const entries = Object.entries(filteredData);
 
   return (
     <Stack maxW="5xl" mx="auto" p={8} spacing={8}>
@@ -68,11 +68,13 @@ const XPage: React.FC<XPageProps> = ({ data }) => {
           Berikut merupakan daftar modul Deno karya para developer Indonesia. 🇮🇩
         </Text>
 
-        <Text>
+        <Text wordBreak="break-word">
           Format dasar URL adalah{" "}
-          <Code>https://denoland.id/x/MODULE_NAME@BRANCH/SCRIPT.ts</Code>. Jika
-          tidak menyertakan nama branch, URL akan menggunakan branch default
-          pada modul, umumnya yaitu branch <Code>master</Code>.
+          <Code display="inline" p={1}>
+            https://denoland.id/x/MODULE_NAME@BRANCH/SCRIPT.ts
+          </Code>
+          . Jika tidak menyertakan nama branch, URL akan menggunakan branch
+          default pada modul, umumnya yaitu branch <Code>master</Code>.
         </Text>
 
         <Text>
@@ -81,8 +83,8 @@ const XPage: React.FC<XPageProps> = ({ data }) => {
             repositori GitHub kami
           </Link>
           . Untuk menambahkan modul baru, silakan{" "}
-          <Link href="https://airtable.com/shreNZcwvO3tM19L1" isExternal i>
-            mengisi form modul database
+          <Link href="https://registry.denoland.id" isExternal i>
+            submit PR di database registry kami
           </Link>
           .
         </Text>
@@ -104,8 +106,8 @@ const XPage: React.FC<XPageProps> = ({ data }) => {
         borderWidth={1}
         boxShadow="sm"
       >
-        {filteredData.length > 0 ? (
-          filteredData.map(({ name, desc }) => (
+        {entries.length > 0 ? (
+          entries.map(([name, { desc }]) => (
             <PseudoBox
               key={name}
               _hover={{ backgroundColor: "gray.50" }}
