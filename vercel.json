@@ -1,6 +1,4 @@
 {
-  "scope": "denoland-id",
-  "alias": ["denoland.id"],
   "env": {
     "GITHUB_CLIENT_ID": "@gh-denoland-registry-client-id",
     "GITHUB_CLIENT_SECRET": "@gh-denoland-registry-client-secret"
@@ -10,10 +8,6 @@
       "GITHUB_CLIENT_ID": "@gh-denoland-registry-client-id",
       "GITHUB_CLIENT_SECRET": "@gh-denoland-registry-client-secret"
     }
-  },
-  "github": {
-    "autoAlias": true,
-    "enabled": true
   },
   "headers": [
     {
@@ -40,6 +34,5 @@
       "source": "/code-of-conduct.md",
       "destination": "https://raw.githubusercontent.com/denoland-id/information/master/CODE_OF_CONDUCT.md"
     }
-  ],
-  "public": true
+  ]
 }
