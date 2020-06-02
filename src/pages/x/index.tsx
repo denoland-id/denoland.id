@@ -68,11 +68,13 @@ const XPage: React.FC<XPageProps> = ({ data }) => {
           Berikut merupakan daftar modul Deno karya para developer Indonesia. 🇮🇩
         </Text>
 
-        <Text>
+        <Text wordBreak="break-word">
           Format dasar URL adalah{" "}
-          <Code>https://denoland.id/x/MODULE_NAME@BRANCH/SCRIPT.ts</Code>. Jika
-          tidak menyertakan nama branch, URL akan menggunakan branch default
-          pada modul, umumnya yaitu branch <Code>master</Code>.
+          <Code display="inline" p={1}>
+            https://denoland.id/x/MODULE_NAME@BRANCH/SCRIPT.ts
+          </Code>
+          . Jika tidak menyertakan nama branch, URL akan menggunakan branch
+          default pada modul, umumnya yaitu branch <Code>master</Code>.
         </Text>
 
         <Text>
