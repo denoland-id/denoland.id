@@ -20,30 +20,38 @@ import { fetchRegistry } from "@/services/registry";
 
 interface XPageProps {
   data: DenoDatabase;
+  keywords: string[][];
 }
 
 export const getStaticProps: GetStaticProps<XPageProps> = async () => {
   const data = await fetchRegistry();
+  const keywords = Object.keys(data).map((d) => [
+    d,
+    Object.values(data[d]).concat(d).join("").toLowerCase(),
+  ]);
 
   return {
     props: {
       data,
+      keywords,
     },
     unstable_revalidate: 10,
   };
 };
 
-const XPage: React.FC<XPageProps> = ({ data }) => {
+const XPage: React.FC<XPageProps> = ({ data, keywords }) => {
   const { socials } = useSiteConfig();
 
   const [search, setSearch] = React.useState<string>();
   const [debouncedSearch, update] = useDebounce(search);
 
-  const filteredData = React.useMemo(
-    () =>
-      debouncedSearch ? { [debouncedSearch]: data[debouncedSearch] } : data,
-    [debouncedSearch],
-  );
+  const filteredData = React.useMemo<DenoDatabase>(() => {
+    return debouncedSearch
+      ? keywords
+          .filter(([, v]) => v.includes(debouncedSearch.toLowerCase()))
+          .reduce((acc, [k]) => ({ ...acc, [k]: data[k] }), {})
+      : data;
+  }, [debouncedSearch]);
 
   const entries = Object.entries(filteredData);
 
