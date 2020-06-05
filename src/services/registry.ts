@@ -1,7 +1,8 @@
 import { DenoDatabase } from "@/types";
 
 export const fetchRegistry = async (registry: string = "all") => {
-  const resp = await fetch(`https://registry.denoland.id/${registry}.json`);
+  const baseUrl = "https://registry.denoland-id.now.sh";
+  const resp = await fetch(`${baseUrl}/${registry}.json`);
   const data = (await resp.json()) as DenoDatabase;
   delete data.$schema;
   return data;
