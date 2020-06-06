@@ -125,11 +125,15 @@ export const fetchModuleMetadata: FetchModuleMetadata = async ({
     const path = `/${segments.slice(1).join("/")}`;
 
     let tree: TreeFile | TreeFile[] = null;
+    let errors: any = null;
+
     if (meta.type === "GitHub") {
       const treeUrl = `https://api.github.com/repos/${meta.org}/${meta.repo}/contents${path}?ref=${branchtag}`;
       const resp = await fetch(treeUrl, { headers });
       if (resp.ok) {
         tree = await resp.json();
+      } else {
+        errors = await resp.json();
       }
     } else if (meta.type === "GitLab") {
       const treeUrl = `https://gitlab.com/${meta.org}/${meta.repo}/-/refs/${branchtag}/logs_tree/?format=json`;
@@ -139,14 +143,34 @@ export const fetchModuleMetadata: FetchModuleMetadata = async ({
     }
 
     let content: string = null;
+    let readme: string = null;
+    let sourceUrl: string = null;
 
     if (tree) {
       if (Array.isArray(tree)) {
         tree = tree.sort((a, b) => a.type.localeCompare(b.type));
+
+        if (meta.type === "GitHub") {
+          let file = tree.find(
+            (t) => t.name.toLowerCase() === "readme.md",
+          ) as GitHubTreeFile;
+
+          if (file) {
+            const resp = await fetch(file.download_url);
+            readme = await resp.text();
+          }
+        } else if (meta.type === "GitLab") {
+          // TODO: implement gitlab readme fetching
+        } else {
+          // TODO: implement file fallback action
+        }
       } else {
         if (meta.type === "GitHub") {
           const file = tree as GitHubTreeFile;
-          content = Buffer.from(file.content, file.encoding).toString();
+          content = file.encoding
+            ? Buffer.from(file.content, file.encoding).toString()
+            : file.content;
+          sourceUrl = file.download_url;
         } else if (meta.type === "GitLab") {
           // TODO: implement gitlab file fetching
         } else {
@@ -163,7 +187,10 @@ export const fetchModuleMetadata: FetchModuleMetadata = async ({
       breadcrumbs,
       path,
       tree,
+      readme,
       content,
+      sourceUrl,
+      errors,
     };
   }
 
@@ -171,7 +198,7 @@ export const fetchModuleMetadata: FetchModuleMetadata = async ({
 };
 
 export const getContentType = (name: string) => {
-  switch (/\w+\.(\w+)/.exec(name)[1]) {
+  switch (/.+\.(.+)$/.exec(name)[1]) {
     case "js":
       return "application/javascript";
     case "ts":
@@ -179,4 +206,16 @@ export const getContentType = (name: string) => {
     default:
       return "text/plain";
   }
+};
+
+export const isImageFromName = (name: string) => {
+  const exts = ["gif", "jpg", "jpeg", "png", "svg"];
+
+  for (const ext of exts) {
+    if (name.endsWith(`.${ext}`)) {
+      return true;
+    }
+  }
+
+  return false;
 };

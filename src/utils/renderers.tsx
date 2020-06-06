@@ -46,7 +46,7 @@ export const contentRenderer: RendererRecord = {
   ),
 
   code: ({ language, value }) => (
-    <Box overflow="auto" pb={2}>
+    <Box overflow="auto" pb={4}>
       <Code p={2} w="full">
         <pre>{value}</pre>
       </Code>
@@ -56,7 +56,7 @@ export const contentRenderer: RendererRecord = {
   heading: ({ level, children, ...props }) => {
     const slug = slugifyChildren(children);
 
-    const sizes = ["2xl", "xl", "lg", "md", "sm", "xs"];
+    const sizes = ["xl", "lg", "md", "sm", "xs", "xs"];
     return (
       <Heading as={`h${level}`} id={slug} size={sizes[level - 1]} {...props}>
         <Link href={`#${slug}`}>{children}</Link>
@@ -74,15 +74,15 @@ export const contentRenderer: RendererRecord = {
     return <Box {...htmlProps} />;
   },
 
-  inlineCode: (props) => <Box as="span" fontFamily="mono" {...props} />,
+  inlineCode: (props) => <Code display="inline" p={1} {...props} />,
 
   link: (props) => <Link {...props} i />,
 
   list: (props) => (
     <List
       pl={8}
-      py={2}
-      spacing={2}
+      pb={2}
+      spacing={1}
       stylePos="outside"
       styleType="disc"
       {...props}
@@ -91,7 +91,7 @@ export const contentRenderer: RendererRecord = {
 
   listItem: (props) => <ListItem {...props} />,
 
-  paragraph: (props) => <Text display="inline" {...props} />,
+  paragraph: (props) => <Text {...props} />,
 
   root: (props) => <Stack spacing={4} {...props} />,
 

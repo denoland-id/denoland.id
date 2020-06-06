@@ -12,19 +12,22 @@ import {
   Heading,
   Icon,
   IconButton,
+  Image,
   Select,
   Stack,
   Text,
   Tooltip,
 } from "@chakra-ui/core";
 import { BreadcrumbLink, Link, TreeIcon, TreeItem } from "@/components";
+import { fetchModuleMetadata, isImageFromName } from "@/utils/registry";
 
 import { FaArrowUp } from "react-icons/fa";
 import { GetServerSideProps } from "next";
+import Markdown from "react-markdown";
 import { NextSeo } from "next-seo";
 import { RegistryResult } from "@/types";
 import Router from "next/router";
-import { fetchModuleMetadata } from "@/utils/registry";
+import { contentRenderer } from "@/utils/renderers";
 import { useForm } from "react-hook-form";
 
 interface XPageProps {
@@ -45,7 +48,19 @@ export const getServerSideProps: GetServerSideProps<XPageProps> = async ({
 };
 
 const XFilesPage: React.FC<XPageProps> = ({ data }) => {
-  const { breadcrumbs, meta, path, segments } = data;
+  const {
+    meta,
+    branchtag,
+    branchtags,
+    segments,
+    breadcrumbs,
+    path,
+    tree,
+    readme,
+    content,
+    sourceUrl,
+    errors,
+  } = data;
 
   const { register, handleSubmit } = useForm();
   const onChange = handleSubmit(({ branchtag }) => {
@@ -64,7 +79,7 @@ const XFilesPage: React.FC<XPageProps> = ({ data }) => {
                 {segments[0]}
               </Heading>
               <Text>{meta.desc}</Text>
-              <Link fontSize="sm" href={data.meta.repoUrl} isExternal i />
+              <Link fontSize="sm" href={meta.repoUrl} isExternal i />
             </Box>
 
             <FormControl>
@@ -72,14 +87,14 @@ const XFilesPage: React.FC<XPageProps> = ({ data }) => {
                 Select branch/tag:
               </FormLabel>
               <Select
-                defaultValue={data.branchtag}
+                defaultValue={branchtag}
                 fontSize="sm"
                 id="branchtag"
                 name="branchtag"
                 onChange={onChange}
                 ref={register}
               >
-                {data.branchtags.map((ref) => (
+                {branchtags.map((ref) => (
                   <option key={ref} value={ref}>
                     {ref}
                   </option>
@@ -145,7 +160,7 @@ const XFilesPage: React.FC<XPageProps> = ({ data }) => {
               </Tooltip>
             </Stack>
 
-            {Array.isArray(data.tree) ? (
+            {Array.isArray(tree) ? (
               <Stack>
                 {segments.length > 1 && (
                   <TreeItem
@@ -156,7 +171,7 @@ const XFilesPage: React.FC<XPageProps> = ({ data }) => {
                       .join("/")}`}
                   />
                 )}
-                {data.tree.map(({ name, type }, i) => (
+                {tree.map(({ name, type }, i) => (
                   <TreeItem
                     Icon={<TreeIcon color="gray.500" name={name} type={type} />}
                     key={i}
@@ -165,19 +180,40 @@ const XFilesPage: React.FC<XPageProps> = ({ data }) => {
                   />
                 ))}
               </Stack>
+            ) : !errors && isImageFromName(sourceUrl) ? (
+              <Image
+                src={sourceUrl}
+                alt={segments[segments.length - 1]}
+                mx="auto"
+              />
             ) : (
               <Code
-                backgroundColor="white"
-                mb={-2}
                 as="pre"
+                borderRadius={0}
+                borderBottomLeftRadius={4}
+                borderBottomRightRadius={4}
+                display="block"
                 overflow="auto"
                 p={4}
+                variantColor={errors ? "red" : "white"}
                 w="full"
               >
-                {data.content}
+                {errors ? JSON.stringify(errors, null, 2) : content}
               </Code>
             )}
           </Box>
+
+          {readme && (
+            <Box
+              borderColor="gray.200"
+              borderRadius={4}
+              borderWidth={1}
+              boxShadow="sm"
+              p={4}
+            >
+              <Markdown source={readme} renderers={contentRenderer} />
+            </Box>
+          )}
         </Stack>
       ) : (
         <Stack spacing={4} textAlign="center">

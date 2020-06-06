@@ -27,11 +27,13 @@ export type TreeFileType = GitHubTreeFileType | GitLabTreeFileType;
 export interface TreeFile<T = TreeFileType> {
   name: string;
   type: T;
+  url: string;
 }
 
 export interface GitHubTreeFile extends TreeFile<GitHubTreeFileType> {
   size: number;
   content: string;
+  download_url: string;
   encoding: BufferEncoding;
 }
 
@@ -43,7 +45,10 @@ export interface RegistryResult {
   breadcrumbs?: string[][];
   path?: string;
   tree?: TreeFile | TreeFile[];
+  readme?: string;
   content?: string;
+  sourceUrl?: string;
+  errors?: any;
 }
 
 export type CreateRepoUrl = (opts: {
