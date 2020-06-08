@@ -77,7 +77,7 @@ export const fetchModuleMetadata: FetchModuleMetadata = async ({
   segments,
   isApi = false,
 } = {}) => {
-  const captured = /([0-9a-z-_]+)(?:@(.+))?/.exec(segments[0]);
+  const captured = /([0-9a-z-_.]+)(?:@(.+))?/.exec(segments[0]);
   let [, moduleName, branchtag = null] = captured;
 
   const module = await fetchModule(moduleName);
