@@ -25,6 +25,7 @@ Router.events.on("routeChangeError", () => NProgress.done());
 
 const CustomAppPage = ({ Component, pageProps, router }: AppProps) => {
   const siteConfig = useSiteConfig();
+  const ogURL = "https://og.denoland.id";
 
   return (
     <SiteConfigProvider>
@@ -38,7 +39,7 @@ const CustomAppPage = ({ Component, pageProps, router }: AppProps) => {
           description: siteConfig.description,
           type: "website",
           site_name: siteConfig.title,
-          images: [{ url: `${siteConfig.url}/social.png` }],
+          images: [{ url: `${ogURL}${router.pathname}.png?fontSize=150px` }],
         }}
         twitter={{
           cardType: "summary_large_image",
