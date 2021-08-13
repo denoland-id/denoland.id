@@ -26,7 +26,7 @@
     "copee": "^1.0.6",
     "emotion-theming": "^10.0.27",
     "favicons": "^6.1.0",
-    "next": "^9.4.4",
+    "next": "^11.1.0",
     "next-seo": "^4.7.3",
     "nprogress": "^0.2.0",
     "react": "^16.13.1",
